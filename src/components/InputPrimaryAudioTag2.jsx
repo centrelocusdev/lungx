@@ -8,10 +8,10 @@ import style from '../assets/CSS/InputPrimaryAudioTag2.module.css';
 const InputPrimaryAudioTag2 = ({imageURL , text , imageName, lung_audio, formData}) => {
  console.log("lung audio" , lung_audio);
   return (
-    <div style={{width: 90+"%"}}  className='flex flex-col items-center gap-5 border-2 border-gray p-10'>
+    <div style={{width: 100+"%"}}  className='flex flex-col items-center gap-5  px-10 py-2'>
+        <p className='text-2xl text-theme-primary  font-semibold text-green-1'>{text}</p>
         {/* <p className='bg-white border-8 py-2 px-6 rounded text-green-1 font-semibold'>{text}</p> */}
-        {/* <p className='bg-white border-8 py-2 px-6 rounded text-green-1 font-semibold'>{text}</p> */}
-        <div style={{width: 80+"%"}} className='relative border-2 border-gray flex justify-center'>
+        <div style={{width: 60+"%"}} className='relative flex justify-center'>
           <img style={{width: 95+"%"}} src={imageURL} alt="heart-image" />
           <div className={style.heartTagsTop}>
           {/* <HeartTags value={formData.p0_tag} heartSectionName={imageName==="Anterior"? "p0": "na"}/> */}
@@ -26,7 +26,7 @@ const InputPrimaryAudioTag2 = ({imageURL , text , imageName, lung_audio, formDat
           <div className={style.heartTagsLeftMid}>
           <HeartTags formData={formData}  heartSectionName={imageName==="Anterior"? "p3": "p9"}/>
           </div>
-          <div className={style.heartTagsRightMid}>
+          <div className={imageName==='Anterior'? style.heartTagsRightMid : style.heartTagsRightMid2}>
           <HeartTags formData={formData} heartSectionName={imageName==="Anterior"? "p4": "p10"}/>
           </div>
           <div className={style.heartTagsLeftBottom}> 
@@ -38,6 +38,13 @@ const InputPrimaryAudioTag2 = ({imageURL , text , imageName, lung_audio, formDat
           {imageName === "Anterior"
           ? 
             <div className={style.anteriorAudioButtons}>
+              <div className={style.anteriorAudioToppest}>
+              <AudioPlayer2
+              heartSectionName="p0"
+              isAudioPresent = {`${lung_audio.p0_audio}`}
+              audioUrl={`https://lung.thedelvierypointe.com${lung_audio.p0_audio}`}
+              />
+              </div>
              <div className={style.anteriorAudioTop}>
              <div className={style.anteriorAudioTopLeft}>
               <AudioPlayer2

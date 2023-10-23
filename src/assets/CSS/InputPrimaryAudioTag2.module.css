@@ -1,7 +1,7 @@
 .heartTagsTop {
   position: absolute;
   top: 5%;
-  left: 50%;
+  left: 54%;
 }
 .heartTagsLeftTop {
   position: absolute;
@@ -27,6 +27,11 @@
   position: absolute;
   top: 52%;
   right: 0;
+}
+.heartTagsRightMid2{
+  position:absolute;
+  top:48%;
+  right:0;
 }
 .heartTagsRightBottom {
   position: absolute;
@@ -71,6 +76,11 @@
 
   /* bottom:10%; */
   /* gap: 180px; */
+}
+.anteriorAudioToppest{
+  position: absolute;
+  left: 44%;
+  top:-20%;
 }
 .anteriorAudioTopLeft {
   position: absolute;
