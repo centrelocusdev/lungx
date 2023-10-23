@@ -9,7 +9,8 @@ const InputPrimaryAudioTag2 = ({imageURL , text , imageName, lung_audio, formDat
  console.log("lung audio" , lung_audio);
   return (
     <div style={{width: 90+"%"}}  className='flex flex-col items-center gap-5 border-2 border-gray p-10'>
-        <p className='bg-white border-8 py-2 px-6 rounded text-green-1 font-semibold'>{text}</p>
+        {/* <p className='bg-white border-8 py-2 px-6 rounded text-green-1 font-semibold'>{text}</p> */}
+        {/* <p className='bg-white border-8 py-2 px-6 rounded text-green-1 font-semibold'>{text}</p> */}
         <div style={{width: 80+"%"}} className='relative border-2 border-gray flex justify-center'>
           <img style={{width: 95+"%"}} src={imageURL} alt="heart-image" />
           <div className={style.heartTagsTop}>

@@ -51,9 +51,10 @@ const modify = (value1)=> {
     // const value = value1.replaceAll("\\", "");
     const value = value1
   const options = JSON.parse(value).options
+  console.log(options,"options01")
 let tagi = ""
 audio_tag = options.map((option,index)=>{
-  if (option.isChecked===true)
+  if (option.isChecked===true && option.id != 6)
   {
     tagi += option.position 
     tagi += (index < options.length - 1) ? ',': ''

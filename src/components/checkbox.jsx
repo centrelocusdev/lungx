@@ -47,7 +47,7 @@ const allValue = JSON.stringify([
   { id: 3, position: "Ronchi", isChecked: true },
   { id: 4, position: "Wheeze", isChecked: true },
   { id: 5, position: "Normal", isChecked: true },
-  { id: 6, position: "All", isChecked: true },
+  // { id: 6, position: "All", isChecked: true },
 ]);
 
 // const options = [
@@ -193,7 +193,14 @@ export default function App({ value, name1, onChange }) {
     });
 
     console.log(isAllChosen, "isAllChosen");
-    let newValue = selectedOptions.map((obj) => JSON.parse(obj.value));
+    
+    let newValue = selectedOptions.map((obj) => {
+       if(obj.label !== "All"){
+
+         return JSON.parse(obj.value)
+       }
+    } 
+    );
 
     const { id, position, optionid } = JSON.parse(value);
     let e = {
