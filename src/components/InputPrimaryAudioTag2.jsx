@@ -15,24 +15,24 @@ const InputPrimaryAudioTag2 = ({imageURL , text , imageName, lung_audio, formDat
           <img style={{width: 95+"%"}} src={imageURL} alt="heart-image" />
           <div className={style.heartTagsTop}>
           {/* <HeartTags value={formData.p0_tag} heartSectionName={imageName==="Anterior"? "p0": "na"}/> */}
-          <HeartTags formData={formData} heartSectionName={imageName==="Anterior"? "p0": "na"}/>
+          <HeartTags formData={formData}  heartSectionName={imageName==="Anterior"? "p0": "na"}/>
           </div>
-          <div className={style.heartTagsLeftTop}>
+          <div className={imageName === 'Anterior' ? style.heartTagsLeftTop : style.heartTagsLeftTopPos}>
           <HeartTags formData={formData}  heartSectionName={imageName==="Anterior"? "p1": "p7"}/>
           </div>
-          <div className={style.heartTagsRightTop}>
+          <div className={imageName === 'Anterior' ? style.heartTagsRightTop : style.heartTagsRightTopPos}>
           <HeartTags formData={formData}  heartSectionName={imageName==="Anterior"? "p2": "p8"}/>
           </div>
-          <div className={style.heartTagsLeftMid}>
+          <div className={imageName === 'Anterior' ? style.heartTagsLeftMid : style.heartTagsLeftMidPos}>
           <HeartTags formData={formData}  heartSectionName={imageName==="Anterior"? "p3": "p9"}/>
           </div>
-          <div className={imageName==='Anterior'? style.heartTagsRightMid : style.heartTagsRightMid2}>
+          <div className={imageName==='Anterior'? style.heartTagsRightMid : style.heartTagsRightMidPos}>
           <HeartTags formData={formData} heartSectionName={imageName==="Anterior"? "p4": "p10"}/>
           </div>
-          <div className={style.heartTagsLeftBottom}> 
+          <div className={imageName === 'Anterior' ? style.heartTagsLeftBottom : style.heartTagsLeftBottomPos}> 
           <HeartTags formData={formData} heartSectionName={imageName==="Anterior"? "p5": "p11"}/>
           </div>
-          <div className={style.heartTagsRightBottom}>
+          <div className={imageName === 'Anterior' ? style.heartTagsRightBottom : style.heartTagsRightBottomPos}>
           <HeartTags formData={formData} heartSectionName={imageName==="Anterior"? "p6": "p12"}/>
           </div>
           {imageName === "Anterior"
