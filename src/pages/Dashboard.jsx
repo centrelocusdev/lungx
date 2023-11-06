@@ -28,8 +28,15 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await getDoctorsList()
-      console.log(res)
+      console.log(res,"in getdoctorlist")
       const filter = await res.map((r) => r.user)
+      // const filter = await res.map((r) => {user:r.user, hospital:r.profile.hospital })
+      // const filter = res.map((r) => ({
+      //   user: r.user,
+      //   hospital: r.profile.hospital
+      // }));
+      
+      console.log(filter,"filter")
       setDoctorsList(filter)
     }
 
@@ -139,6 +146,8 @@ let scrollY = '0';
                     <th className="py-3 px-4 text-left">S.No.</th>
                     <th className="py-3 px-4 text-left">Doctor's Name</th>
                     <th className="py-3 px-4 text-left">Doctor's Email</th>
+                    <th className="py-3 px-4 text-left">Doctor's Mobile No.</th>
+                    <th className="py-3 px-4 text-left">Hospital</th>
                     <th className="py-3 px-4 text-left"></th>
                   </tr>
                 </thead>
@@ -153,6 +162,8 @@ let scrollY = '0';
                         {item.first_name} {item.last_name}
                       </td>
                       <td className="py-3 px-4 text-left">{item.email}</td>
+                      <td className="py-3 px-4 text-left">{item.mobile}</td>
+                      <td className="py-3 px-4 text-left">{item.profile?.hospital}</td>
                       <td className="py-3 px-4 text-left">
                         <button
                           onClick={(e) => handleViewPatientsClick(item.id)}
