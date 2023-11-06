@@ -9,36 +9,43 @@ const InputPrimaryAudioTag2 = ({imageURL , text , imageName, lung_audio, formDat
   const index = [0,1,2,3,4,5,6,7,8,9,10,11,12]
  console.log("lung audio" , lung_audio);
   return (
-    <div style={{width: 90+"%"}}  className='flex flex-col items-center gap-5 border-2 border-gray p-10'>
+    <div style={{width: 100+"%"}}  className='flex flex-col items-center gap-5  px-10 py-2'>
+        <p className='text-2xl text-theme-primary  font-semibold text-green-1'>{text}</p>
         {/* <p className='bg-white border-8 py-2 px-6 rounded text-green-1 font-semibold'>{text}</p> */}
-        {/* <p className='bg-white border-8 py-2 px-6 rounded text-green-1 font-semibold'>{text}</p> */}
-        <div style={{width: 80+"%"}} className='relative border-2 border-gray flex justify-center'>
+        <div style={{width: 60+"%"}} className='relative flex justify-center'>
           <img style={{width: 95+"%"}} src={imageURL} alt="heart-image" />
           <div className={style.heartTagsTop}>
           {/* <HeartTags value={formData.p0_tag} heartSectionName={imageName==="Anterior"? "p0": "na"}/> */}
-          <HeartTags formData={formData} heartSectionName={imageName==="Anterior"? "p0": "na"}/>
+          <HeartTags formData={formData}  heartSectionName={imageName==="Anterior"? "p0": "na"}/>
           </div>
-          <div className={style.heartTagsLeftTop}>
+          <div className={imageName === 'Anterior' ? style.heartTagsLeftTop : style.heartTagsLeftTopPos}>
           <HeartTags formData={formData}  heartSectionName={imageName==="Anterior"? "p1": "p7"}/>
           </div>
-          <div className={style.heartTagsRightTop}>
+          <div className={imageName === 'Anterior' ? style.heartTagsRightTop : style.heartTagsRightTopPos}>
           <HeartTags formData={formData}  heartSectionName={imageName==="Anterior"? "p2": "p8"}/>
           </div>
-          <div className={style.heartTagsLeftMid}>
+          <div className={imageName === 'Anterior' ? style.heartTagsLeftMid : style.heartTagsLeftMidPos}>
           <HeartTags formData={formData}  heartSectionName={imageName==="Anterior"? "p3": "p9"}/>
           </div>
-          <div className={style.heartTagsRightMid}>
+          <div className={imageName==='Anterior'? style.heartTagsRightMid : style.heartTagsRightMidPos}>
           <HeartTags formData={formData} heartSectionName={imageName==="Anterior"? "p4": "p10"}/>
           </div>
-          <div className={style.heartTagsLeftBottom}> 
+          <div className={imageName === 'Anterior' ? style.heartTagsLeftBottom : style.heartTagsLeftBottomPos}> 
           <HeartTags formData={formData} heartSectionName={imageName==="Anterior"? "p5": "p11"}/>
           </div>
-          <div className={style.heartTagsRightBottom}>
+          <div className={imageName === 'Anterior' ? style.heartTagsRightBottom : style.heartTagsRightBottomPos}>
           <HeartTags formData={formData} heartSectionName={imageName==="Anterior"? "p6": "p12"}/>
           </div>
           {imageName === "Anterior"
           ? 
             <div className={style.anteriorAudioButtons}>
+              <div className={style.anteriorAudioToppest}>
+              <AudioPlayer2
+              heartSectionName="p0"
+              isAudioPresent = {`${lung_audio.p0_audio}`}
+              audioUrl={`https://lung.thedelvierypointe.com${lung_audio.p0_audio}`}
+              />
+              </div>
              <div className={style.anteriorAudioTop}>
              <div className={style.anteriorAudioTopLeft}>
               <AudioPlayer2

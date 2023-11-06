@@ -1,37 +1,68 @@
 .heartTagsTop {
   position: absolute;
   top: 5%;
-  left: 50%;
+  left: 54%;
 }
 .heartTagsLeftTop {
   position: absolute;
+  top: 30%;
+  left: 0;
+}
+.heartTagsLeftTopPos{
+  position: absolute;
   top: 25%;
-  left: 10%;
+  left: 0;
 }
 .heartTagsLeftMid {
   position: absolute;
   top: 52%;
-  left: 10%;
+  left:-8%;
+}
+.heartTagsLeftMidPos {
+  position: absolute;
+  top: 50%;
+  left:-8%;
 }
 .heartTagsLeftBottom {
   position: absolute;
   bottom: 10%;
-  left: 10%;
+  left: -12%;
+}
+.heartTagsLeftBottomPos {
+  position: absolute;
+  bottom: 10%;
+  left: -14%;
 }
 .heartTagsRightTop {
   position: absolute;
-  right: 0;
+  right: 5%;
+  top: 30%;
+}
+.heartTagsRightTopPos {
+  position: absolute;
+  right: 0%;
   top: 25%;
 }
 .heartTagsRightMid {
   position: absolute;
-  top: 52%;
-  right: 0;
+  top: 50%;
+  right: -5%;
 }
+.heartTagsRightMidPos {
+  position:absolute;
+  top:48%;
+  right: -8% ;
+}
+
 .heartTagsRightBottom {
   position: absolute;
-  right: 0;
+  right: -8%;
   bottom: 10%;
+}
+.heartTagsRightBottomPos {
+  position: absolute;
+  right: -12%;
+  bottom: 12%;
 }
 .anteriorAudioButtons {
   width: 100%;
@@ -49,14 +80,14 @@
   display: flex;
   width: 100%;
   position: absolute;
-  top: 5%;
+  top: 23%;
   /* left:10%; */
 }
 .anteriorAudioMid {
   width: 100%;
   display: flex;
   position: absolute;
-  top: 35%;
+  top: 53%;
   /* left:10%; */
 
   /* gap: 180px; */
@@ -65,36 +96,41 @@
   width: 100%;
   display: flex;
   position: absolute;
-  top: 65%;
+  top: 83%;
   /* bottom:0; */
   /* left:10%; */
 
   /* bottom:10%; */
   /* gap: 180px; */
 }
+.anteriorAudioToppest{
+  position: absolute;
+  left: 44%;
+  top:-20%;
+}
 .anteriorAudioTopLeft {
   position: absolute;
-  left: 30%;
+  left: 25%;
 }
 .anteriorAudioTopRight {
   position: absolute;
-  right: 30%;
+  right: 27%;
 }
 .anteriorAudioMidLeft {
   position: absolute;
-  left: 30%;
+  left:25%;
 }
 .anteriorAudioMidRight {
   position: absolute;
-  right: 30%;
+  right: 27%;
 }
 .anteriorAudioBottomLeft {
   position: absolute;
-  left: 30%;
+  left: 25%;
 }
 .anteriorAudioBottomRight {
   position: absolute;
-  right: 30%;
+  right: 27%;
 }
 .posteriorAudioButtons {
     width: 100%;
@@ -113,14 +149,14 @@
   display: flex;
   width: 100%;
   position: absolute;
-  top: 5%;
+  top: 17%;
   /* left:10%; */
 }
 .posteriorAudioMid {
   width: 100%;
   display: flex;
   position: absolute;
-  top: 35%;
+  top: 49%;
   /* left:10%; */
 
   /* gap: 180px; */
@@ -129,7 +165,7 @@
   width: 100%;
   display: flex;
   position: absolute;
-  top: 65%;
+  top: 81%;
   /* bottom:0; */
   /* left:10%; */
 
@@ -138,25 +174,25 @@
 }
 .posteriorAudioTopLeft {
   position: absolute;
-  left: 30%;
+  left: 24%;
 }
 .posteriorAudioTopRight {
   position: absolute;
-  right: 30%;
+  right: 23%;
 }
 .posteriorAudioMidLeft {
   position: absolute;
-  left: 30%;
+  left: 24%;
 }
 .posteriorAudioMidRight {
   position: absolute;
-  right: 30%;
+  right: 23%;
 }
 .posteriorAudioBottomLeft {
   position: absolute;
-  left: 30%;
+  left: 23%;
 }
 .posteriorAudioBottomRight {
   position: absolute;
-  right: 30%;
+  right: 23%;
 }
