@@ -288,6 +288,8 @@ export const updateLungAudioReport = async (formData) => {
     //   toast.error('Please enter a value')
     //   return
     // }
+
+    console.log(formData,"lungformData")
     const res = await axios.patch(`${api}/lung_audio/`, formData, {
       headers: {
         Authorization: `Bearer ${Cookies.get('LungX-AT')}`,

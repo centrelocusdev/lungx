@@ -30,6 +30,7 @@ const Popup = ({ doctorsList, display, report }) => {
   const [formData, setFormData] = useState({});
   const [initialFormData, setInitialFormData] = useState({});
   const [isDataReady, setIsDataReady] = useState(false);
+  const [comment, setComment] = useState('');
 
   const [patientData, setPatientData] = useState({
     temperature: "",
@@ -96,7 +97,9 @@ const Popup = ({ doctorsList, display, report }) => {
       p12_tag: lung_audio.p12_tag,
     };
     // lung_audio.map((audio))
+    setComment(lung_audio.comment)
     setFormData(lung_fields);
+    // setComment(lung_audio.comment)
     setInitialFormData(lung_fields);
     const patient_data = {
       temperature: patienthealthdata.temperature,
@@ -114,10 +117,17 @@ const Popup = ({ doctorsList, display, report }) => {
     console.log(formData, "Formdata", lung_fields);
   }, []);
 
+  const handleCommentChange = (e) =>{
+      console.log(e,e.target,e.target.value,"handleCommentChange")
+      setComment(e.target.value)
+  }
+
   const handleModalClick = () => {
     // console.log(toggleModal)
     setToggleModal((toggleModal) => !toggleModal);
   };
+
+
 
   const handlePatientChange = (e) => {
     setPatientData((prev) => ({
@@ -177,6 +187,7 @@ const Popup = ({ doctorsList, display, report }) => {
     });
     console.log(updatedFields);
     const res = await updateLungAudioReport({
+      comment:comment,
       id: lung_audio.id,
       ...updatedFields,
     });
@@ -456,7 +467,7 @@ const Popup = ({ doctorsList, display, report }) => {
                       </div>
 
                       {/* <InputPrimary name={'p0_tag'} />
-                <InputPrimary name={'p1_tag'} /> */}
+                   <InputPrimary name={'p1_tag'} /> */}
                     </div>
 
                     <div
@@ -464,7 +475,7 @@ const Popup = ({ doctorsList, display, report }) => {
                       className="flex gap-2 justify-around items-center"
                     >
                       {/* <InputPrimary name={'p2_tag'} />
-                <InputPrimary name={'p3_tag'} /> */}
+                  <InputPrimary name={'p3_tag'} /> */}
                       <div style={{ width: 90 + "%" }} className="flex gap-2">
                         <InputPrimaryAudioTag
                           name={"p3_tag"}
@@ -569,6 +580,40 @@ const Popup = ({ doctorsList, display, report }) => {
                       </div>
                     </div>
                   </div>
+                  {/* <div className="flex gap-2"> */}
+                {/* <InputPrimary
+                  name={"blood_pressure"}
+                  value={patientData.blood_pressure}
+                  onChange={handlePatientChange}
+                /> */}
+                {/* </div> */}
+     <div className="w-full mt-6 text-gray-600">
+      <label htmlFor={'Comment'} className="capitalize  text-2xl  block font-medium text-center">
+        {'Comments'}
+      </label>
+      {/* <MySelect/> */}
+      {/* <Cascader/> */}
+      
+      <textarea id='Comment'
+       name={'Comment'}
+       value={comment}
+       // placeholder={placeholder}
+       onChange={handleCommentChange}
+       // disabled={disabled}
+       rows="4"
+       className={`w-full bg-[#D1D1D147] rounded px-4 py-2 mt-1 focus:outline-none focus:bg-white focus:border-[#D1D1D147] border border-transparent}`}> 
+
+      </textarea>
+      {/* <input
+        type={'textarea'}
+        name={'Comment'}
+        value={comment}
+        // placeholder={placeholder}
+        onChange={handleCommentChange}
+        // disabled={disabled}
+        className={`w-full bg-[#D1D1D147] rounded px-4 py-2 mt-1 focus:outline-none focus:bg-white focus:border-[#D1D1D147] border border-transparent}`}
+      /> */}
+    </div>
                 </div>
 
                 <ButtonPrimary
