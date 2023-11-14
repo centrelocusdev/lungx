@@ -152,7 +152,7 @@ export default function App({ value, name1, onChange }) {
     return tagi;
   };
 
-  console.log(value, modify(value), typeof (audio_tag, modify(value)), "modi");
+  // console.log(value, modify(value), typeof (audio_tag, modify(value)), "modi");
 
   useEffect(() => {
     // let defaultvalue = modify(value).split(',')
@@ -161,7 +161,7 @@ export default function App({ value, name1, onChange }) {
       const { position } = value;
       defaultvalue[index] = { value: JSON.stringify(value), label: position };
     });
-    console.log(Defaultvalue, defaultvalue, value, "defaultvalue In UseEffect");
+    // console.log(Defaultvalue, defaultvalue, value, "defaultvalue In UseEffect");
 
     setSelectedOption(defaultvalue);
   }, [value]);
@@ -169,7 +169,7 @@ export default function App({ value, name1, onChange }) {
   //   console.log(Defaultvalue,defaultvalue,"defaultvalue")
 
   const handleSelectOptions = (selectedOptions) => {
-    console.log(selectedOptions, "itse");
+    // console.log(selectedOptions, "itse");
     // console.log(selectedOptions)
     setSelectedOption(selectedOptions);
     // let newValue = ''
@@ -180,7 +180,7 @@ export default function App({ value, name1, onChange }) {
 
     // })
 
-    console.log(selectedOptions, "selectedOptions");
+    // console.log(selectedOptions, "selectedOptions");
 
     let flag = false;
     let posOfIsAllChosen;
@@ -192,7 +192,7 @@ export default function App({ value, name1, onChange }) {
       }
     });
 
-    console.log(isAllChosen, "isAllChosen");
+    // console.log(isAllChosen, "isAllChosen");
     
     let newValue = selectedOptions.map((obj) => {
        if(obj.label !== "All"){
@@ -214,9 +214,9 @@ export default function App({ value, name1, onChange }) {
         }),
       },
     };
-    console.log(newValue, "newvalue", e);
-    console.log(JSON.stringify(newValue, null, 2));
-    console.log(value, "value", id, position, optionid);
+    // console.log(newValue, "newvalue", e);
+    // console.log(JSON.stringify(newValue, null, 2));
+    // console.log(value, "value", id, position, optionid);
     //  target = {name:name,value:newValue}
 
     onChange(e);
@@ -228,7 +228,7 @@ export default function App({ value, name1, onChange }) {
   //     // setSelectedOption(selectedOptions)
 
   //   }
-  console.log(selectedOption, "In CheckBox");
+  // console.log(selectedOption, "In CheckBox");
   return (
     <div className="App">
       <Select

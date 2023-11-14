@@ -254,7 +254,7 @@ const cascaderComplaintsOptions = [
 },
 
 ]
-const InputPrimary = ({ type, name, placeholder, value, onChange, disabled }) => {
+const InputPrimary = ({ type, name, placeholder, value, onChange, is_disabled }) => {
   console.log(JSON.parse(value))
 
   let defaultJsonFormat = []
@@ -282,7 +282,7 @@ const InputPrimary = ({ type, name, placeholder, value, onChange, disabled }) =>
         {name.split('_').join(' ')}
       </label>
       {/* <MySelect/> */}
-      <CascaderTag value1 ={value} name1={name} onChange={onChange} defaultJsonFormat={defaultJsonFormat}  cascaderOptions={cascaderOptions}/>
+      <CascaderTag value1 ={value} name1={name} onChange={onChange} defaultJsonFormat={defaultJsonFormat}  cascaderOptions={cascaderOptions} is_disabled={is_disabled}/>
       
       {/* <input
         type={type ? type : 'text'}

@@ -115,11 +115,14 @@ export const shareData = async (formData) => {
 export const login = async (formData) => {
   try {
     const res = await axios.post(`${api}/login/`, formData)
-    Cookies.set('LungX-AT', res.data.access)
-    Cookies.set('LungX-RT', res.data.refresh)
-    console.log(res.data.access)
-    toast.success('Logged in successfully')
-    return true
+    const user = "";
+    if(res){
+      Cookies.set('LungX-AT', res.data.access)
+      Cookies.set('LungX-RT', res.data.refresh)
+      toast.success('Logged in successfully')
+      return res.data.user;
+    }
+    
   } catch (err) {
     toast.error(err.response.data.error)
     return false
@@ -160,6 +163,76 @@ export const getDoctorsList = async () => {
       },
     })
 
+    return res.data
+  } catch (err) {
+    toast.error(err.error)
+    return false
+  }
+}
+
+export const viewSharedData = async () => {
+  try {
+    const res = await axios.get(`${api}/view-shared-data/`, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('LungX-AT')}`,
+        'content-type': 'multipart/form-data',
+      },
+    })
+    //  console.log(res.data,"inviewSharedData")
+    return res.data
+  } catch (err) {
+    toast.error(err.error)
+    return false
+  }
+}
+
+export const isOpinionGiven = async (formData) => {
+  try {
+    const res = await axios.post(`${api}/admin/doctor_opinion/`, formData, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('LungX-AT')}`,
+        'content-type': 'multipart/form-data',
+      },
+    })
+    console.log(res.data,"isOpinionGiven")
+    return res.data
+  } catch (err) {
+    toast.error(err.error)
+    return false
+  }
+}
+
+export const markDataAsViewed = async(shareID) => {
+  console.log(shareID,"markdata",`${api}/mark-data-as-viewed/${shareID}/`)
+  try {
+    const res = await axios.patch(`${api}/mark-data-as-viewed/${shareID}/`, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('LungX-AT')}`,
+        // 'content-type': 'multipart/form-data',
+      },
+    })
+     console.log(res.data,"markDataAsViewed")
+    return res.data
+  } catch (err) {
+    toast.error(err.error)
+    return false
+  }
+}
+
+export const doctorOpinion = async (oldformData) => {
+  console.log(oldformData,"opinionformData")
+  const formData = {...oldformData,...oldformData.formData}
+  console.log(formData,"formData")
+  console
+  try {
+    const res = await axios.put(`${api}/admin/doctor_opinion/`, formData,{
+      headers: {
+        Authorization: `Bearer ${Cookies.get('LungX-AT')}`,
+        'content-type': 'multipart/form-data',
+      },
+    })
+     console.log(res,res.data,"doctorOpinion")
+    toast.success("Your Opinions Has been saved")
     return res.data
   } catch (err) {
     toast.error(err.error)

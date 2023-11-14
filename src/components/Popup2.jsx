@@ -17,11 +17,23 @@ import {
   updateLungAudioReport,
   shareData,
   updatePatientHealthReport,
+  doctorOpinion,
+  isOpinionGiven,
 } from "../API";
 import AudioPlayer from "./AudioPlayer";
 
-const Popup = ({ doctorsList, display, report }) => {
-  // console.log(report,'in popup')
+const Popup = ({
+  doctorsList,
+  display,
+  report,
+  isOpinionAlreadyGiven,
+  is_admin,
+  is_doctor,
+}) => {
+  // for Doctor Panel
+  console.log(isOpinionAlreadyGiven, "isAlreadyOpinionGiven");
+  const { admin, id: shareDataId, doctor: opinionDoctor } = report;
+  console.log(report, "in popup");
   const { patient, patienthealthdata, lung_audio } = report;
   console.log(patient, patienthealthdata, lung_audio, "all three");
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +42,7 @@ const Popup = ({ doctorsList, display, report }) => {
   const [formData, setFormData] = useState({});
   const [initialFormData, setInitialFormData] = useState({});
   const [isDataReady, setIsDataReady] = useState(false);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
 
   const [patientData, setPatientData] = useState({
     temperature: "",
@@ -97,7 +109,7 @@ const Popup = ({ doctorsList, display, report }) => {
       p12_tag: lung_audio.p12_tag,
     };
     // lung_audio.map((audio))
-    setComment(lung_audio.comment)
+    setComment(lung_audio.comment);
     setFormData(lung_fields);
     // setComment(lung_audio.comment)
     setInitialFormData(lung_fields);
@@ -117,23 +129,26 @@ const Popup = ({ doctorsList, display, report }) => {
     console.log(formData, "Formdata", lung_fields);
   }, []);
 
-  const handleCommentChange = (e) =>{
-      console.log(e,e.target,e.target.value,"handleCommentChange")
-      setComment(e.target.value)
-  }
+  const handleCommentChange = (e) => {
+    console.log(e, e.target, e.target.value, "handleCommentChange");
+    setComment(e.target.value);
+  };
 
   const handleModalClick = () => {
     // console.log(toggleModal)
     setToggleModal((toggleModal) => !toggleModal);
   };
 
-
-
   const handlePatientChange = (e) => {
-    setPatientData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    if (is_doctor) {
+      return;
+    } else {
+      setPatientData((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
+    }
+
     //  console.log(patientData,'patient_change')
   };
 
@@ -178,6 +193,7 @@ const Popup = ({ doctorsList, display, report }) => {
   };
 
   const handleSubmit = async () => {
+    console.log("handlesubmit");
     setIsLoading(true);
     const updatedFields = {};
     Object.keys(formData).forEach((fieldName) => {
@@ -186,17 +202,45 @@ const Popup = ({ doctorsList, display, report }) => {
       }
     });
     console.log(updatedFields);
-    const res = await updateLungAudioReport({
-      comment:comment,
-      id: lung_audio.id,
-      ...updatedFields,
-    });
+    let res;
+    if (!admin) {
+      console.log("in admin");
+      res = await updateLungAudioReport({
+        comment: comment,
+        id: lung_audio.id,
+        ...updatedFields,
+      });
 
-    const res1 = await updatePatientHealthReport(patient.doctor, {
-      patient_health_id: patienthealthdata.id,
-      ...patientData,
-    });
-    console.log(res, "updated Lung form data");
+      const res1 = await updatePatientHealthReport(patient.doctor, {
+        patient_health_id: patienthealthdata.id,
+        ...patientData,
+      });
+      toast.success('Data has been updated!')
+
+    } else {
+      console.log("in doctor");
+      console.log(isOpinionAlreadyGiven, "isOpinionAlreadyGiven");
+      if (isOpinionAlreadyGiven) {
+        console.log('in submitted already');
+        toast.error("You have already Submited your Opinion");
+      } else {
+        console.log("not submitted");
+        // const mark = await markDataAsViewed(shareDataId)
+        // const Opinion = await await isOpinionGiven()
+        res = await doctorOpinion({
+          patient: patienthealthdata.patient,
+          share_data: shareDataId,
+          doctor: opinionDoctor,
+          session: patienthealthdata.session,
+          status: true,
+          comment: comment,
+          id: lung_audio.id,
+          // ...updatedFields,
+          formData,
+        });
+        // toast.success('Opinion has been submitted!')
+      }
+    }
     // console.log(res1,'updated Patient Health Data ')
     res && display();
     res &&
@@ -330,36 +374,36 @@ const Popup = ({ doctorsList, display, report }) => {
                 <InputPrimary
                   name={"patient_name"}
                   value={patient.patient_name}
-                  disabled={true}
+                  disabled={is_doctor}
                 />
                 <InputPrimary
                   name={"patient_code"}
                   value={patient.patient_code}
-                  disabled={true}
+                  disabled={is_doctor}
                 />
                 <InputPrimary
                   name={"patient_Type"}
                   value={
                     patient.in_patient === true ? "In Patient" : "Out Patient"
                   }
-                  disabled={true}
+                  disabled={is_doctor}
                 />
               </div>
               <div className="flex gap-2">
                 <InputPrimary
                   name={"patient_Age"}
                   value={patienthealthdata.age}
-                  disabled={true}
+                  disabled={is_doctor}
                 />
                 <InputPrimary
                   name={"patient_Gender"}
                   value={patienthealthdata.gender}
-                  disabled={true}
+                  disabled={is_doctor}
                 />
                 <InputPrimary
                   name={"patient_Session"}
                   value={patienthealthdata.session}
-                  disabled={true}
+                  disabled={is_doctor}
                 />
               </div>
               <div className="flex gap-2">
@@ -376,16 +420,19 @@ const Popup = ({ doctorsList, display, report }) => {
                   // diagnosis_notes: '',
                   // lifestyle_habits: '',
                   // additional_notes: '',
+                  disabled={is_doctor}
                 />
                 <InputPrimary
                   name={"temperature"}
                   value={patientData.temperature}
                   onChange={handlePatientChange}
+                  disabled={is_doctor}
                 />
                 <InputPrimary
                   name={"oxygen_saturation"}
                   value={patientData.oxygen_saturation}
                   onChange={handlePatientChange}
+                  disabled={is_doctor}
                 />
               </div>
               <div className="flex gap-2">
@@ -393,16 +440,19 @@ const Popup = ({ doctorsList, display, report }) => {
                   name={"blood_pressure"}
                   value={patientData.blood_pressure}
                   onChange={handlePatientChange}
+                  disabled={is_doctor}
                 />
                 <InputPrimaryCascader
                   name={"chronic_diseases"}
                   value={patientData.chronic_diseases}
                   onChange={handlePatientChange}
+                  is_disabled={is_doctor}
                 />
                 <InputPrimaryCascader
                   name={"chief_complaints"}
                   value={patientData.chief_complaints}
                   onChange={handlePatientChange}
+                  is_disabled={is_doctor}
                 />
               </div>
               <div className="flex gap-2">
@@ -410,22 +460,28 @@ const Popup = ({ doctorsList, display, report }) => {
                   name={"diagnosis_notes"}
                   value={patientData.diagnosis_notes}
                   onChange={handlePatientChange}
+                  disabled={is_doctor}
                 />
                 <InputPrimaryCascader
                   name={"lifestyle_habits"}
                   value={patientData.lifestyle_habits}
                   onChange={handlePatientChange}
+                  is_disabled={is_doctor}
                 />
                 <InputPrimary
                   name={"additional_notes"}
                   value={patientData.additional_notes}
                   onChange={handlePatientChange}
+                  disabled={is_doctor}
                 />
               </div>
 
               <div className="mt-12">
                 <div className="flex flex-col justify-around items-center mb-12">
-                  <div  style={{ width: 100 + "%" }} className="border-2 border-gray mb-12 p-5">
+                  <div
+                    style={{ width: 100 + "%" }}
+                    className="border-2 border-gray mb-12 p-5"
+                  >
                     <div
                       style={{ width: 100 + "%" }}
                       className="flex gap-2 justify-center items-center"
@@ -515,7 +571,10 @@ const Popup = ({ doctorsList, display, report }) => {
                     </div>
                   </div>
 
-                  <div  style={{ width: 100 + "%" }} className="border-2 border-gray p-5">
+                  <div
+                    style={{ width: 100 + "%" }}
+                    className="border-2 border-gray p-5"
+                  >
                     <div
                       style={{ width: 100 + "%" }}
                       className="flex gap-2 justify-center items-center"
@@ -581,30 +640,33 @@ const Popup = ({ doctorsList, display, report }) => {
                     </div>
                   </div>
                   {/* <div className="flex gap-2"> */}
-                {/* <InputPrimary
+                  {/* <InputPrimary
                   name={"blood_pressure"}
                   value={patientData.blood_pressure}
                   onChange={handlePatientChange}
                 /> */}
-                {/* </div> */}
-     <div className="w-full mt-6 text-gray-600">
-      <label htmlFor={'Comment'} className="capitalize  text-2xl  block font-medium text-center">
-        {'Comments'}
-      </label>
-      {/* <MySelect/> */}
-      {/* <Cascader/> */}
-      
-      <textarea id='Comment'
-       name={'Comment'}
-       value={comment}
-       // placeholder={placeholder}
-       onChange={handleCommentChange}
-       // disabled={disabled}
-       rows="4"
-       className={`w-full bg-[#D1D1D147] rounded px-4 py-2 mt-1 focus:outline-none focus:bg-white focus:border-[#D1D1D147] border border-transparent}`}> 
+                  {/* </div> */}
+                  <div className="w-full mt-6 text-gray-600">
+                    <label
+                      htmlFor={"Comment"}
+                      className="capitalize  text-2xl  block font-medium text-center"
+                    >
+                      {"Comments"}
+                    </label>
+                    {/* <MySelect/> */}
+                    {/* <Cascader/> */}
 
-      </textarea>
-      {/* <input
+                    <textarea
+                      id="Comment"
+                      name={"Comment"}
+                      value={comment}
+                      // placeholder={placeholder}
+                      onChange={handleCommentChange}
+                      // disabled={disabled}
+                      rows="4"
+                      className={`w-full bg-[#D1D1D147] rounded px-4 py-2 mt-1 focus:outline-none focus:bg-white focus:border-[#D1D1D147] border border-transparent}`}
+                    ></textarea>
+                    {/* <input
         type={'textarea'}
         name={'Comment'}
         value={comment}
@@ -613,7 +675,7 @@ const Popup = ({ doctorsList, display, report }) => {
         // disabled={disabled}
         className={`w-full bg-[#D1D1D147] rounded px-4 py-2 mt-1 focus:outline-none focus:bg-white focus:border-[#D1D1D147] border border-transparent}`}
       /> */}
-    </div>
+                  </div>
                 </div>
 
                 <ButtonPrimary
@@ -621,11 +683,15 @@ const Popup = ({ doctorsList, display, report }) => {
                   handleClick={handleSubmit}
                   width={"full"}
                 />
-                <ButtonPrimary
-                  text={"Share"}
-                  handleClick={handleModalClick}
-                  width={"full"}
-                />
+                {!admin ? (
+                  <ButtonPrimary
+                    text={"Share"}
+                    handleClick={handleModalClick}
+                    width={"full"}
+                  />
+                ) : (
+                  ""
+                )}
               </div>
               <button
                 onClick={display}

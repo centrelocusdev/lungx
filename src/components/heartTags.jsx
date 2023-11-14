@@ -31,7 +31,7 @@ let tagData
     //     finalFormData =  formData.
     // }
     // finalFormData = dict.filter((item)=> dict[heartSectionName])
-     console.log(`{${heartSectionName} + '_tag'}`,'bindass')
+    //  console.log(`{${heartSectionName} + '_tag'}`,'bindass')
      const propertyName = `${heartSectionName}_tag`;
      tagData = formData[propertyName];
  }
@@ -49,11 +49,11 @@ let tagData
 
 let audio_tag
 const modify = (value1)=> {
-    console.log(value1,'inmodify')
+    // console.log(value1,'inmodify')
     // const value = value1.replaceAll("\\", "");
     const value = value1
   const options = JSON.parse(value).options
-  console.log(options,"options01")
+  // console.log(options,"options01")
 let tagi = ""
 audio_tag = options.map((option,index)=>{
   if (option.isChecked===true && option.id != 6)
@@ -61,7 +61,7 @@ audio_tag = options.map((option,index)=>{
     tagi += option.position 
     tagi += (index < options.length - 1) ? ',': ''
     
-     console.log(option,tagi)
+    //  console.log(option,tagi)
   }
 })
 return tagi 
@@ -69,7 +69,7 @@ return tagi
 const tagValue = tagData ? modify(tagData) : ''
 const finalTags = tagValue.split(',')
 
-console.log("final tags" , finalTags,tagValue,tagData,formData,finalFormData,audio_tag);
+// console.log("final tags" , finalTags,tagValue,tagData,formData,finalFormData,audio_tag);
 function handleLeftAndRight(){
 if(heartSectionName === 'p1' ||heartSectionName === 'p3' ||  heartSectionName === 'p7' || heartSectionName === 'p9'){
   setLeftOrRight("left");
@@ -83,7 +83,7 @@ if(heartSectionName === 'p1' ||heartSectionName === 'p3' ||  heartSectionName ==
 }
 useEffect(()=> {
 handleLeftAndRight();
-console.log("hello", heartSectionName, leftOrRight);
+// console.log("hello", heartSectionName, leftOrRight);
 } , [leftOrRight])
   return (
     <div className={`flex flex-col w-32 gap-1 ${(leftOrRight && leftOrRight === 'left' || (heartSectionName === 'p5' || heartSectionName === 'p11')) ? "items-end" : "items-start"}`}>

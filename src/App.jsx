@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import PrivateRoutes from "./PrivateRoutes";
 import Dashboard from "./pages/Dashboard";
 import AddDoctor from "./pages/AddDoctor";
+import DoctorDashboard from "./pages/DoctorDashboard";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route element={<PrivateRoutes />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/AddDoctor" element={<AddDoctor />} />
+        <Route path="/DoctorDashboard" element={<DoctorDashboard />} />
         </Route>
       </Routes>
       </Suspense>

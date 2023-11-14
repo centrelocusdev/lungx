@@ -147,7 +147,7 @@ import { Cascader } from 'antd';
 //     ],
 //   },
 // ];
-const App = ({value1,name1,onChange, cascaderOptions,defaultJsonFormat}) => {
+const App = ({value1,name1,onChange, cascaderOptions,defaultJsonFormat , is_disabled}) => {
 
 
     // cascader value is in form [[firstlevelValue, SecondLevelValue],[firstlevelValue, SecondlevelValue]]
@@ -216,19 +216,39 @@ const App = ({value1,name1,onChange, cascaderOptions,defaultJsonFormat}) => {
       console.log(value);
     };
 
-   return (
+   if(is_disabled){
+    return (
 
-  <Cascader
-    style={{
-      width: '100%',
-    }}
-    options={cascaderOptions}
-    onChange={handleChange}
-    multiple
-    value={value}
-    onDropdownVisibleChange={dummy}
-    maxTagCount="responsive"
-  />
-);
+      <Cascader
+        style={{
+          width: '100%',
+        }}
+        options={cascaderOptions}
+        // onChange={handleChange}
+        multiple
+        value={value}
+        onDropdownVisibleChange={dummy}
+        maxTagCount="responsive"
+        // disabled
+        
+      />
+    );
+   }else {
+    return(
+      
+      <Cascader
+        style={{
+          width: '100%',
+        }}
+        options={cascaderOptions}
+        onChange={handleChange}
+        multiple
+        value={value}
+        onDropdownVisibleChange={dummy}
+        maxTagCount="responsive"
+        
+      />
+    )
+   }
 }
 export default App;
