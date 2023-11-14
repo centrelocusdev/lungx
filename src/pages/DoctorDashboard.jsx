@@ -30,12 +30,12 @@ const DoctorDashboard = () => {
     const location = useLocation();
     let is_doctor = location.state.is_doctor;
     let is_admin = location.state.is_admin;
-    console.log(is_doctor, is_admin);
+    // console.log(is_doctor, is_admin);
 
     useEffect( ()=>{
       const fetchData = async () => {
         const res = await viewSharedData()
-        console.log(res,"viewSharedData")
+        // console.log(res,"viewSharedData")
         setShareData(res)
         // const filter = await res.map((r) => r.user)
         // const filter = await res.map((r) => {user:r.user, hospital:r.profile.hospital })
@@ -74,10 +74,10 @@ const DoctorDashboard = () => {
       const {lung_audio,patient_health,patient} = item
       const OpinionData = await isOpinionGiven({ patient_id:patient.id, lung_audio_id: lung_audio[0]?.id, patient_health_id:patient_health[0]?.id})
      
-      console.log(OpinionData,"OpinionData")
+      // console.log(OpinionData,"OpinionData")
       const isalreday = OpinionData.DataAndOpinion[0].DoctorOpinion
       let final_lung_audio 
-      console.log("isAlreadyLength" , isalreday);
+      // console.log("isAlreadyLength" , isalreday);
       if (isalreday.length>0)
       {
         const opinion = isalreday[isalreday.length-1]

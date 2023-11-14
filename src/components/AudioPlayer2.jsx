@@ -46,7 +46,7 @@ const AudioPlayer2 = ({ audioUrl, heartSectionName, isAudioPresent }) => {
   const audioRef = useRef(null);
   let togglePlayPause;
  if(isAudioPresent !== 'null'){
-    console.log("in the");
+    // console.log("in the");
     togglePlayPause = () => {
         const audio = audioRef.current;
         if (isPlaying) {
@@ -62,7 +62,7 @@ const AudioPlayer2 = ({ audioUrl, heartSectionName, isAudioPresent }) => {
   const audio = audioRef.current;
   
   if (audio.paused) {
-    console.log(audio.paused);
+    // console.log(audio.paused);
     setIsPlaying(false);
   }
 }, []);

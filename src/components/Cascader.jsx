@@ -160,16 +160,16 @@ const App = ({value1,name1,onChange, cascaderOptions,defaultJsonFormat , is_disa
          {     temp.push(item.title)
             let option =  item.options.find((option)=> option.isChecked === true)
             temp.push(option.title)
-            console.log(item)
+            // console.log(item)
          }
          // to make sure that both asthma and its option is checked
          temp.length === 2 ? defaultValue.push(temp): ''
     }
     )
-    console.log(defaultValue,"defaultValue")
+    // console.log(defaultValue,"defaultValue")
     
 
-    console.log(value1,name1,onChange,"In Cascader",newValue)
+    // console.log(value1,name1,onChange,"In Cascader",newValue)
     // const [value,setValue ] = useState(['Asthma', '< 5 Years'])
     const [value,setValue ] = useState(defaultValue)
     
@@ -180,23 +180,23 @@ const App = ({value1,name1,onChange, cascaderOptions,defaultJsonFormat , is_disa
         setValue(selectedOptions)
         // comment setValue and cgheck later, because default value will change there is no need of set value 
         
-        console.log(selectedOptions,newValue,"In hablechange value ");
+        // console.log(selectedOptions,newValue,"In hablechange value ");
 
      // map selected Values with the Json Format
      selectedOptions.map((item)=>{
-        console.log(item)
+        // console.log(item)
         newJsonFormat = newJsonFormat.map((particularDisease)=>{
             if(particularDisease.title === item[0])
             {
                 let resultOptions = particularDisease.options.map((year)=>{
-                    console.log(year,year.title,'year')
+                    // console.log(year,year.title,'year')
                     if(year.title===item[1]){
-                        console.log('i reached here')
+                        // console.log('i reached here')
                        return { ...year,isChecked:true}
                     }
                     return {...year}
                          })
-                console.log(item,particularDisease, resultOptions, " complex issue")
+                // console.log(item,particularDisease, resultOptions, " complex issue")
                 return {...particularDisease,isChecked:true,
                 options: resultOptions}
             
@@ -204,7 +204,7 @@ const App = ({value1,name1,onChange, cascaderOptions,defaultJsonFormat , is_disa
         return {...particularDisease}
         
         })
-        console.log(newJsonFormat,"newJsonFormat")
+        // console.log(newJsonFormat,"newJsonFormat")
 
       })
       let e = {target: {name:name1,value:JSON.stringify(newJsonFormat)}}
@@ -213,7 +213,7 @@ const App = ({value1,name1,onChange, cascaderOptions,defaultJsonFormat , is_disa
     };
 
     const dummy = (value) => {
-      console.log(value);
+      // console.log(value);
     };
 
    if(is_disabled){

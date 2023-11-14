@@ -23,17 +23,17 @@ function MySelect() {
 
   function handleLabel (label) {
 
-console.log(label)
+// console.log(label)
   }
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
-     console.log(selectedOption)
+    //  console.log(selectedOption)
     // Check if the selected option is a group heading
     if (selectedOption && selectedOption.label && !selectedOption.value) {
-      console.log('Selected Group Heading:', selectedOption.label);
+      // console.log('Selected Group Heading:', selectedOption.label);
     } else {
-      console.log('Selected Option:', selectedOption);
+      // console.log('Selected Option:', selectedOption);
     }
   };
 

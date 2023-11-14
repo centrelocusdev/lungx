@@ -31,11 +31,11 @@ const Popup = ({
   is_doctor,
 }) => {
   // for Doctor Panel
-  console.log(isOpinionAlreadyGiven, "isAlreadyOpinionGiven");
+  // console.log(isOpinionAlreadyGiven, "isAlreadyOpinionGiven");
   const { admin, id: shareDataId, doctor: opinionDoctor } = report;
-  console.log(report, "in popup");
+  // console.log(report, "in popup");
   const { patient, patienthealthdata, lung_audio } = report;
-  console.log(patient, patienthealthdata, lung_audio, "all three");
+  // console.log(patient, patienthealthdata, lung_audio, "all three");
   const [isLoading, setIsLoading] = useState(false);
   const [toggleModal, setToggleModal] = useState(true);
 
@@ -126,11 +126,11 @@ const Popup = ({
     };
     setPatientData(patient_data);
     setIsDataReady(true);
-    console.log(formData, "Formdata", lung_fields);
+    // console.log(formData, "Formdata", lung_fields);
   }, []);
 
   const handleCommentChange = (e) => {
-    console.log(e, e.target, e.target.value, "handleCommentChange");
+    // console.log(e, e.target, e.target.value, "handleCommentChange");
     setComment(e.target.value);
   };
 
@@ -157,7 +157,7 @@ const Popup = ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    console.log(formData, "It is Form Data");
+    // console.log(formData, "It is Form Data");
   };
 
   const handleShare = async (doctorId, reportId) => {
@@ -193,7 +193,7 @@ const Popup = ({
   };
 
   const handleSubmit = async () => {
-    console.log("handlesubmit");
+    // console.log("handlesubmit");
     setIsLoading(true);
     const updatedFields = {};
     Object.keys(formData).forEach((fieldName) => {
@@ -201,10 +201,10 @@ const Popup = ({
         updatedFields[fieldName] = formData[fieldName];
       }
     });
-    console.log(updatedFields);
+    // console.log(updatedFields);
     let res;
     if (!admin) {
-      console.log("in admin");
+      // console.log("in admin");
       res = await updateLungAudioReport({
         comment: comment,
         id: lung_audio.id,
@@ -218,13 +218,13 @@ const Popup = ({
       toast.success('Data has been updated!')
 
     } else {
-      console.log("in doctor");
-      console.log(isOpinionAlreadyGiven, "isOpinionAlreadyGiven");
+      // console.log("in doctor");
+      // console.log(isOpinionAlreadyGiven, "isOpinionAlreadyGiven");
       if (isOpinionAlreadyGiven) {
-        console.log('in submitted already');
+        // console.log('in submitted already');
         toast.error("You have already Submited your Opinion");
       } else {
-        console.log("not submitted");
+        // console.log("not submitted");
         // const mark = await markDataAsViewed(shareDataId)
         // const Opinion = await await isOpinionGiven()
         res = await doctorOpinion({

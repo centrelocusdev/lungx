@@ -26,10 +26,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(isSelected)
+    // console.log(isSelected)
     if(isSelected === true){
     setIsLoading(true)
-    console.log("res")
+    // console.log("res")
     const res = await login(formData)
     if(res && (res.is_admin || res.is_doctor)) {
       if(res.is_admin){
@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   const handleChange = (e) =>{
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setIsSelected(true)
 
   }

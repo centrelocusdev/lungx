@@ -11,7 +11,7 @@ const InputPrimaryAudioTag = ({
   lung_audio,
 }) => {
   // value = value.replace('{','').replace('}','')
-  console.log(lung_audio, 'InputPrimaryAudio',{onChange},value)
+  // console.log(lung_audio, 'InputPrimaryAudio',{onChange},value)
   const music = `https://lung.thedelvierypointe.com${lung_audio}`
   return (
     <div style={{width: 33+"%"}}  className="w-full mt-3 text-gray-600">
@@ -26,7 +26,7 @@ const InputPrimaryAudioTag = ({
       {/* <AudioPlayer
         audioUrl={`https://lung.thedelvierypointe.com${lung_audio}`}
         /> */}
-        {console.log(value,"value in action")}
+        {/* {console.log(value,"value in action")} */}
       <CheckBox value={value} onChange={onChange} name1={name} />
       {/* <source
           src={music}

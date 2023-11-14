@@ -112,7 +112,7 @@ const Popup = ({ doctorsList, display, report }) => {
     }
     setPatientData(patient_data)
     setIsDataReady(true)
-    console.log(formData,'Formdata',lung_fields)
+    // console.log(formData,'Formdata',lung_fields)
     
   }, [])
   
@@ -134,7 +134,7 @@ const Popup = ({ doctorsList, display, report }) => {
       ...prev,
       [e.target.name]: e.target.value,
     }))
-    console.log(formData,"It is Form Data")
+    // console.log(formData,"It is Form Data")
   }
 
   const handleShare = async (doctorId, reportId) => {
@@ -177,7 +177,7 @@ const Popup = ({ doctorsList, display, report }) => {
         updatedFields[fieldName] = formData[fieldName]
       }
     })
-    console.log(updatedFields)
+    // console.log(updatedFields)
     const res = await updateLungAudioReport({
       id: lung_audio.id,
       ...updatedFields,
@@ -187,7 +187,7 @@ const Popup = ({ doctorsList, display, report }) => {
       patient_health_id: patienthealthdata.id,
       ...patientData,
     })
-    console.log(res, 'updated Lung form data')
+    // console.log(res, 'updated Lung form data')
     // console.log(res1,'updated Patient Health Data ')
     res && display()
     res &&

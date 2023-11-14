@@ -40,11 +40,11 @@ const AddDoctor = () => {
         confirm_password: confirmPassword,
       })
       if (newDoctor) {
-        console.log('yaha tak')
+        // console.log('yaha tak')
         const doctors = await getDoctorsList()
         // setAllJournals(journals)
 
-        console.log(doctors)
+        // console.log(doctors)
         setToggleModal(true)
         setFirstName('')
         setLastName('')
@@ -64,7 +64,7 @@ const AddDoctor = () => {
   }
 
   const handleModalClick = () => {
-    console.log(toggleModal)
+    // console.log(toggleModal)
     setToggleModal((toggleModal) => !toggleModal)
   }
   return (

@@ -28,7 +28,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await getDoctorsList()
-      console.log(res,"in getdoctorlist")
+      // console.log(res,"in getdoctorlist")
       const filter = await res.map((r) => r.user)
       // const filter = await res.map((r) => {user:r.user, hospital:r.profile.hospital })
       // const filter = res.map((r) => ({
@@ -36,7 +36,7 @@ const Dashboard = () => {
       //   hospital: r.profile.hospital
       // }));
       
-      console.log(filter,"filter")
+      // console.log(filter,"filter")
       setDoctorsList(filter)
     }
 
@@ -61,7 +61,7 @@ const Dashboard = () => {
 
   const handlePatientFilter = async (e)=>{
     const {  value } = e.target
-    console.log(value,typeof(value),"filter patient ")
+    // console.log(value,typeof(value),"filter patient ")
     if(value==='out_patient')
     {
       return setPatientsFilterList(patientsList.filter((patient)=> patient.out_patient === true))
@@ -91,15 +91,15 @@ let scrollY = '0';
 // to maintain scroll position after hiding
 
   const handleOpenPopupClick = async(item) => {
-    console.log(item,"i am in ")
+    // console.log(item,"i am in ")
     const res = await ViewFullReport(item)
-    console.log(res,"ye badiya hai guru ")
+    // console.log(res,"ye badiya hai guru ")
     if(res===false) {return}
     setReport(res)
     // when the popup is shown, we want a fixed background body
     document.body.style.position='fixed'
     document.body.style.top=`${window.scrollY}px`
-    console.log(window.scrollY,'scrolll wala hai')
+    // console.log(window.scrollY,'scrolll wala hai')
 
     setShowPopup(true)
    
@@ -107,7 +107,7 @@ let scrollY = '0';
 
   const handleClosePopupClick = () => { 
     scrollY = document.body.style.top;
-    console.log(scrollY,' ye close hone par scroll')
+    // console.log(scrollY,' ye close hone par scroll')
     document.body.style.position = ''
     document.body.style.top = ''
     window.scrollTo(0,parseInt(scrollY||'0')*-1);
@@ -215,7 +215,7 @@ let scrollY = '0';
                       key={item.id}
                       className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
                     >
-                      {console.log(item, 'patient id')}
+                      {/* {console.log(item, 'patient id')} */}
                       {/* <td className="py-3 px-4 text-left">{item.id}</td> */}
                       <td className="py-3 px-4 text-left">
                         {item.patient_code}
@@ -268,7 +268,7 @@ let scrollY = '0';
             </button>
             {reportsList[0]?.patienthealthdata?.length ? (
               <>
-                {console.log(reportsList[0].patienthealthdata)}
+                {/* {console.log(reportsList[0].patienthealthdata)} */}
                 <table className="min-w-full divide-y divide-green-3 capitalize">
                   <thead className="bg-gray-100">
                     <tr>
@@ -288,7 +288,7 @@ let scrollY = '0';
                         className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
                       >
                         {' '}
-                        {console.log(item, 'reoprt ID')}
+                        {/* {console.log(item, 'reoprt ID')} */}
                         {/* const {id, status, session} =  */}
                         <td className="py-3 px-4 text-left">{item.id}</td>
                         <td className="py-3 px-4 text-left">{item.is_active==true? 'Active':'In Active'}</td>

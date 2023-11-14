@@ -7,7 +7,7 @@ import style from '../assets/CSS/InputPrimaryAudioTag2.module.css';
 
 const InputPrimaryAudioTag2 = ({imageURL , text , imageName, lung_audio, formData}) => {
   const index = [0,1,2,3,4,5,6,7,8,9,10,11,12]
- console.log("lung audio" , lung_audio);
+//  console.log("lung audio" , lung_audio);
   return (
     <div style={{width: 100+"%"}}  className='flex flex-col items-center gap-5  px-10 py-2'>
         <p className='text-2xl text-theme-primary  font-semibold text-green-1'>{text}</p>

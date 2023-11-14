@@ -255,7 +255,7 @@ const cascaderComplaintsOptions = [
 
 ]
 const InputPrimary = ({ type, name, placeholder, value, onChange, is_disabled }) => {
-  console.log(JSON.parse(value))
+  // console.log(JSON.parse(value))
 
   let defaultJsonFormat = []
   let cascaderOptions = []

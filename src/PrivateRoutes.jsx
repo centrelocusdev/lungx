@@ -7,7 +7,7 @@ const PrivateRoutes = () => {
 
   // let auth = Cookies.get('access-token')
   let auth = Cookies.get('LungX-AT')
-  console.log(auth, "auth")
+  // console.log(auth, "auth")
 
   //before API integration
   // return auth ? <Outlet /> :<Outlet />
