@@ -329,10 +329,14 @@ export const ViewFullReport = async ({
       )
       // console.log(finalRes);
       let doctor_opinion =[];
+      // console.log(finalRes);
       if(finalRes){
         if(finalRes.data.DataAndOpinion.length>0){
           for(let i = 0;i<finalRes.data.DataAndOpinion.length;i++){
-            doctor_opinion.push(finalRes.data.DataAndOpinion[i].DoctorOpinion[0]);
+            // console.log(finalRes.data.DataAndOpinion[i].DoctorOpinion[0]);
+            if(finalRes.data.DataAndOpinion[i].DoctorOpinion[0] !== undefined){
+              doctor_opinion.push(finalRes.data.DataAndOpinion[i].DoctorOpinion[0]);
+            }
           }
           // doctor_opinion[0]= finalRes.data.DataAndOpinion[0].DoctorOpinion[0];
         }
