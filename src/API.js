@@ -87,12 +87,12 @@ export const createDoctorByAdmin = async (formData) => {
 export const shareData = async (formData) => {
   try {
     // console.log(formData.email, formData.password,formData.confirm_password,formData.first_name,formData.last_name,formData.mobile)
-    console.log(
-      formData.doctor_id,
-      formData.patient_id,
-      formData.patient_health_ids,
-      formData.lung_audio_ids
-    )
+    // console.log(
+    //   formData.doctor_id,
+    //   formData.patient_id,
+    //   formData.patient_health_ids,
+    //   formData.lung_audio_ids
+    // )
     const res = await axios.put(`${api}/share-data/`, formData, {
       headers: {
         Authorization: `Bearer ${Cookies.get('LungX-AT')}`,

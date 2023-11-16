@@ -19,9 +19,9 @@ import {
 import AudioPlayer from './AudioPlayer'
 
 const Popup = ({ doctorsList, display, report }) => {
-  console.log(report.lung_audio.p1_tag,'in popup')
+  // console.log(report.lung_audio.p1_tag,'in popup')
   const { patient, patienthealthdata, lung_audio } = report
-  console.log(patient, patienthealthdata, lung_audio, 'all three')
+  // console.log(patient, patienthealthdata, lung_audio, 'all three')
   const [isLoading, setIsLoading] = useState(false)
   const [toggleModal, setToggleModal] = useState(true)
 

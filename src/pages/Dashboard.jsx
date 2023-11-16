@@ -120,8 +120,8 @@ const filterHeartTagsData = async(value)=> {
     if(res===false) {return}
     setReport(res.data)
     let finalDoctorOpinions = [];
-    console.log(res.doctor_opinion.length);
-    console.log(res.doctor_opinion);
+    // console.log(res.doctor_opinion.length);
+    // console.log(res.doctor_opinion);
     if(res.doctor_opinion && res.doctor_opinion.length>0 && res.doctor_opinion[0] !== undefined){
       for(let i = 0;i<res.doctor_opinion.length>0;i++){
         let opinion = {};
