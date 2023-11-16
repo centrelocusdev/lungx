@@ -27,8 +27,11 @@ const AddDoctor = () => {
   const [mobile, setMobile] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-
+  const location = useLocation();
+  let is_doctor = location.state.is_doctor;
+  let is_admin = location.state.is_admin;
   const handleSubmit = async (e) => {
+   
     e.preventDefault()
     try {
       const newDoctor = await addDoctorAdmin({
@@ -178,7 +181,7 @@ const AddDoctor = () => {
           <ButtonPrimary
             text="View All Doctors"
             width={'full'}
-            handleClick={() => navigate('/Dashboard')}
+            handleClick={() => navigate('/Dashboard', {state: {is_admin: is_admin, is_doctor: is_doctor}})}
           />
           <div className="text-center w-full mt-5"></div>
         </div>

@@ -40,7 +40,7 @@ export const addDoctorAdmin = async (formData) => {
     })
     toast.success('New Doctor has been added')
     return res.data
-    console.log(res.data)
+    // console.log(res.data)
   } catch (err) {
     // console.log(err)
     // console.log(err.response.data)
@@ -99,7 +99,7 @@ export const shareData = async (formData) => {
         'content-type': 'multipart/form-data',
       },
     })
-    console.log(res.data)
+    // console.log(res.data)
     return res.data
   } catch (err) {
     console.log(err)
@@ -194,7 +194,7 @@ export const isOpinionGiven = async (formData) => {
         'content-type': 'multipart/form-data',
       },
     })
-    console.log(res.data,"isOpinionGiven")
+    // console.log(res.data,"isOpinionGiven")
     return res.data
   } catch (err) {
     toast.error(err.error)
@@ -203,7 +203,7 @@ export const isOpinionGiven = async (formData) => {
 }
 
 export const markDataAsViewed = async(shareID) => {
-  console.log(shareID,"markdata",`${api}/mark-data-as-viewed/${shareID}/`)
+  // console.log(shareID,"markdata",`${api}/mark-data-as-viewed/${shareID}/`)
   try {
     const res = await axios.patch(`${api}/mark-data-as-viewed/${shareID}/`, {
       headers: {
@@ -211,7 +211,7 @@ export const markDataAsViewed = async(shareID) => {
         // 'content-type': 'multipart/form-data',
       },
     })
-     console.log(res.data,"markDataAsViewed")
+    //  console.log(res.data,"markDataAsViewed")
     return res.data
   } catch (err) {
     toast.error(err.error)
@@ -220,9 +220,9 @@ export const markDataAsViewed = async(shareID) => {
 }
 
 export const doctorOpinion = async (oldformData) => {
-  console.log(oldformData,"opinionformData")
+  // console.log(oldformData,"opinionformData")
   const formData = {...oldformData,...oldformData.formData}
-  console.log(formData,"formData")
+  // console.log(formData,"formData")
   console
   try {
     const res = await axios.put(`${api}/admin/doctor_opinion/`, formData,{
@@ -231,7 +231,7 @@ export const doctorOpinion = async (oldformData) => {
         'content-type': 'multipart/form-data',
       },
     })
-     console.log(res,res.data,"doctorOpinion")
+    //  console.log(res,res.data,"doctorOpinion")
     toast.success("Your Opinions Has been saved")
     return res.data
   } catch (err) {
@@ -273,7 +273,7 @@ export const getReportsList = async ({
   patient_id: patient_id,
   doctor_id: doctor_id,
 }) => {
-  console.log(patient_id, doctor_id, 'checking')
+  // console.log(patient_id, doctor_id, 'checking')
   const formData = { id:patient_id }
   try {
     const res = await axios.post(
@@ -285,7 +285,7 @@ export const getReportsList = async ({
         },
       }
     )
-    console.log(res.data, ' in new get patient healthreports of particular patient ')
+    // console.log(res.data, ' in new get patient healthreports of particular patient ')
     return res.data
   } catch (err) {
     toast.error(err.error)
@@ -300,7 +300,7 @@ export const ViewFullReport = async ({
   const [month, day, year] = date.split('/')
   // console.log(month,day,year)
   date = `${year}-${month}-${day}`
-  console.log(date,session,patient)
+  // console.log("view full report", date,session,patient);
   const formData = { patient_id: patient, session: session, created_at:date }
   try {
     const res = await axios.post(
@@ -312,8 +312,35 @@ export const ViewFullReport = async ({
         },
       }
     )
-    console.log(res.data, ' in response of viewdata ')
-    return res.data
+    if(res){
+      // console.log(res.data, ' in response of viewdata ')
+      const patientId = res.data.patient.id;
+      const patientHealthId = res.data.patienthealthdata.id;
+      const lungAudioId = res.data.lung_audio.id;
+      // console.log(patientId, lungAudioId, patientHealthId);
+      const finalRes = await axios.post(
+        `${api}/admin/doctor_opinion/`,
+        {patient_id: patientId, patient_health_id: patientHealthId, lung_audio_id: lungAudioId},
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('LungX-AT')}`,
+          },
+        }
+      )
+      // console.log(finalRes);
+      let doctor_opinion =[];
+      if(finalRes){
+        if(finalRes.data.DataAndOpinion.length>0){
+          for(let i = 0;i<finalRes.data.DataAndOpinion.length;i++){
+            doctor_opinion.push(finalRes.data.DataAndOpinion[i].DoctorOpinion[0]);
+          }
+          // doctor_opinion[0]= finalRes.data.DataAndOpinion[0].DoctorOpinion[0];
+        }
+      }
+      return {data: res.data, doctor_opinion};
+
+    }
+   
   } catch (err) {
     console.log(err)
     toast.error(err?.response?.data?.error)
@@ -342,7 +369,7 @@ export const updatePatientHealthReport = async (doctorId, formData) => {
       toast.error('Please enter a value')
       return
     }
-    console.log(doctorId,formData,"In UpdatePatientHealthData")
+    // console.log(doctorId,formData,"In UpdatePatientHealthData")
     const res = await axios.patch(`${api}/admin/patients/${doctorId}/`, formData, {
       headers: {
         Authorization: `Bearer ${Cookies.get('LungX-AT')}`,
@@ -362,13 +389,13 @@ export const updateLungAudioReport = async (formData) => {
     //   return
     // }
 
-    console.log(formData,"lungformData")
+    // console.log(formData,"lungformData")
     const res = await axios.patch(`${api}/lung_audio/`, formData, {
       headers: {
         Authorization: `Bearer ${Cookies.get('LungX-AT')}`,
       },
     })
-    console.log(res, 'updated lung audio sucessfully')
+    // console.log(res, 'updated lung audio sucessfully')
     res.status == 200 && toast.success('Lung Audio Report updated successfuly')
     return res.data
   } catch (err) {

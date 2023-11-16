@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   ViewFullReport,
+  doctorOpinion,
   getDoctorsList,
   getPatientsByDoctorID,
   getPatientsList,
@@ -8,6 +9,8 @@ import {
   logout,
   updateLungAudioReport,
 } from '../API'
+import { useLocation } from 'react-router-dom'
+
 import ButtonPrimary from '../components/ButtonPrimary'
 import { FiLogOut } from 'react-icons/fi'
 import { FaUserMd, FaRegEnvelope, FaArrowAltCircleLeft } from 'react-icons/fa'
@@ -24,7 +27,12 @@ const Dashboard = () => {
   const [reportsList, setReportsList] = useState([])
   const [showPopup, setShowPopup] = useState(false)
   const [showDoctorPopup, setShowDoctorPopup] = useState(false)
+  const [doctorOpinion, setDoctorOpinion] = useState([]);
+  const location = useLocation();
+
   const [report, setReport] = useState('')
+  let is_doctor = location.state.is_doctor;
+  let is_admin = location.state.is_admin;
   useEffect(() => {
     const fetchData = async () => {
       const res = await getDoctorsList()
@@ -89,13 +97,68 @@ const Dashboard = () => {
 
 let scrollY = '0';
 // to maintain scroll position after hiding
+const filterHeartTagsData = async(value)=> {
+  let defaultvalue = await JSON.parse(value).options.map((item)=>{
+    return item.position;
+  });   
+  
+  let status = "";
+  for(let i = 0;i<defaultvalue.length;i++){
+    if(i === defaultvalue.length -1){
+      status = status + defaultvalue[i]
+    }else{
+      status = status + defaultvalue[i] + ","
+    }
+  }
+  return status;
 
+}
   const handleOpenPopupClick = async(item) => {
     // console.log(item,"i am in ")
     const res = await ViewFullReport(item)
     // console.log(res,"ye badiya hai guru ")
     if(res===false) {return}
-    setReport(res)
+    setReport(res.data)
+    let finalDoctorOpinions = [];
+    // console.log(res.doctor_opinion.length);
+    if(res.doctor_opinion && res.doctor_opinion.length>0 && res.doctor_opinion[0] !== undefined){
+      for(let i = 0;i<res.doctor_opinion.length>0;i++){
+        let opinion = {};
+        opinion.doctor_name = res.doctor_opinion[i].doctor_name;
+        opinion.doctor_id = res.doctor_opinion[i].doctor;
+        const p0_tag = await filterHeartTagsData(res.doctor_opinion[i].p0_tag);
+        const p1_tag = await filterHeartTagsData(res.doctor_opinion[i].p1_tag);
+        const p2_tag = await filterHeartTagsData(res.doctor_opinion[i].p2_tag);
+        const p3_tag = await filterHeartTagsData(res.doctor_opinion[i].p3_tag);
+        const p4_tag = await filterHeartTagsData(res.doctor_opinion[i].p4_tag);
+        const p5_tag = await filterHeartTagsData(res.doctor_opinion[i].p5_tag);
+        const p6_tag = await filterHeartTagsData(res.doctor_opinion[i].p6_tag);
+        const p7_tag = await filterHeartTagsData(res.doctor_opinion[i].p7_tag);
+        const p8_tag = await filterHeartTagsData(res.doctor_opinion[i].p8_tag);
+        const p9_tag = await filterHeartTagsData(res.doctor_opinion[i].p9_tag);
+        const p10_tag = await filterHeartTagsData(res.doctor_opinion[i].p10_tag);
+        const p11_tag = await filterHeartTagsData(res.doctor_opinion[i].p11_tag);
+        const p12_tag = await filterHeartTagsData(res.doctor_opinion[i].p12_tag);
+
+        opinion.p0_tag = p0_tag;
+        opinion.p1_tag = p1_tag;
+        opinion.p2_tag = p2_tag;
+        opinion.p3_tag = p3_tag;
+        opinion.p4_tag = p4_tag;
+        opinion.p5_tag = p5_tag;
+        opinion.p6_tag = p6_tag;
+        opinion.p7_tag = p7_tag;
+        opinion.p8_tag = p8_tag;
+        opinion.p9_tag = p9_tag;
+        opinion.p10_tag = p10_tag;
+        opinion.p11_tag = p11_tag;
+        opinion.p12_tag = p12_tag;
+
+        finalDoctorOpinions.push(opinion);
+      }
+    }
+    // console.log("final doctor opinion" , finalDoctorOpinions);
+    setDoctorOpinion(finalDoctorOpinions);
     // when the popup is shown, we want a fixed background body
     document.body.style.position='fixed'
     document.body.style.top=`${window.scrollY}px`
@@ -124,6 +187,9 @@ let scrollY = '0';
           doctorsList={doctorsList}
           display={handleClosePopupClick}
           report={report}
+          is_admin = {is_admin}
+          is_doctor = {is_doctor}
+          doctor_opinion={doctorOpinion}
         />
       )}
       <div className="w-screen min-h-screen  md:px-16 md:py-8">

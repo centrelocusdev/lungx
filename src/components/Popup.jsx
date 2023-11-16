@@ -158,7 +158,7 @@ const Popup = ({ doctorsList, display, report }) => {
       })
       // console.log(isShared, 'isshared')
       if (isShared) {
-        toast.success(`the Patient Data Has been Shared`)
+        toast.success(`The Patient Data Has been Shared`)
         handleModalClick()
         return display()
       }

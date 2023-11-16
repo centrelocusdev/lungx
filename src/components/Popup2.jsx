@@ -8,6 +8,8 @@ import Select from "react-select";
 import InputPrimaryCascader from "./InputPrimaryCascader";
 import Anterior from "../assets/images/Anterior.png";
 import Posterior from "../assets/images/Posterior.png";
+import style from "../../public/style/popup2.module.css";
+import DoctorOpinion from "./doctorOpinion";
 import {
   getDoctorsList,
   getPatientsByDoctorID,
@@ -29,8 +31,10 @@ const Popup = ({
   isOpinionAlreadyGiven,
   is_admin,
   is_doctor,
+  doctor_opinion,
 }) => {
   // for Doctor Panel
+  // console.log("doctors list", doctorsList);
   // console.log(isOpinionAlreadyGiven, "isAlreadyOpinionGiven");
   const { admin, id: shareDataId, doctor: opinionDoctor } = report;
   // console.log(report, "in popup");
@@ -43,6 +47,7 @@ const Popup = ({
   const [initialFormData, setInitialFormData] = useState({});
   const [isDataReady, setIsDataReady] = useState(false);
   const [comment, setComment] = useState("");
+  const [showDoctorOpinionTable, setShowDoctorOpinionTable] = useState(false);
 
   const [patientData, setPatientData] = useState({
     temperature: "",
@@ -92,6 +97,45 @@ const Popup = ({
   //     p11_tag: modify(lung_audio.p11_tag),
   //     p12_tag: modify(lung_audio.p12_tag),
   //   }
+  let doctorsNewList = doctorsList.slice();
+  console.log(doctorsList === doctorsNewList);
+  // useEffect(() => {
+  //   // console.log("in the use effect of popup");
+  //   // console.log("new list in useEffect" , doctorsList);
+  //   // doctorsNewList = doctorsList;
+  //   if (
+  //     doctorsNewList &&
+  //     doctorsNewList.length > 0 &&
+  //     doctor_opinion &&
+  //     doctor_opinion.length > 0
+  //   ) {
+  //     for (let i = 0; i < doctorsNewList.length; i++) {
+  //       let check = false;
+  //       //  console.log(doctor_opinion.length);
+  //       for (let j = 0; j < doctor_opinion.length; j++) {
+  //         console.log("hello");
+  //         // console.log(doctorsNewList[i].id, doctor_opinion[j].doctor_id, i , j);
+  //         if (doctorsNewList[i].id === doctor_opinion[j].doctor_id) {
+  //           console.log(
+  //             doctorsNewList[i].id,
+  //             doctor_opinion[j].doctor_id,
+  //             i,
+  //             j
+  //           );
+
+  //           check = true;
+  //           doctorsNewList[i].buttonColorStatus = false;
+  //         }
+  //       }
+  //       if (check === false) {
+  //         doctorsNewList[i].buttonColorStatus = true;
+  //       }
+  //     }
+  //   }
+  //   console.log("doctorsnewlist", doctorsNewList);
+  //   console.log("doctors old list" , doctorsList);
+  //   console.log("opinion doctrs" , doctor_opinion);
+  // }, [handleModalClick]);
   useEffect(() => {
     const lung_fields = {
       p0_tag: lung_audio.p0_tag,
@@ -181,7 +225,7 @@ const Popup = ({
       });
       // console.log(isShared, 'isshared')
       if (isShared) {
-        toast.success(`the Patient Data Has been Shared`);
+        toast.success(`The Patient Data Has been Shared`);
         handleModalClick();
         return display();
       }
@@ -215,8 +259,7 @@ const Popup = ({
         patient_health_id: patienthealthdata.id,
         ...patientData,
       });
-      toast.success('Data has been updated!')
-
+      toast.success("Data has been updated!");
     } else {
       // console.log("in doctor");
       // console.log(isOpinionAlreadyGiven, "isOpinionAlreadyGiven");
@@ -274,43 +317,56 @@ const Popup = ({
       >
         <div className="bg-white shadow-lg rounded-3xl h-screen md:m-auto m-5 md:p-12 p-5 overflow-scroll  ">
           <div className=" mx-auto  ">
-            {doctorsList?.length ? (
-              <table className="min-w-full min-h-full divide-y divide-green-3 ">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="py-3 px-4 text-left">S.No.</th>
-                    <th className="py-3 px-4 text-left">Doctor's Name</th>
-                    <th className="py-3 px-4 text-left">Doctor's Email</th>
-                    <th className="py-3 px-4 text-left">Share</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white  ">
-                  {doctorsList.map((item, index) => (
-                    <tr
-                      key={item.id}
-                      className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-                    >
-                      <td className="py-3 px-4 text-left">{index + 1}</td>
-                      <td className="py-3 px-4 text-left">
-                        {item.first_name} {item.last_name}
-                      </td>
-                      <td className="py-3 px-4 text-left">{item.email}</td>
-                      <td className="py-3 px-4 text-left">
-                        <ButtonPrimary
-                          text={"Share"}
-                          handleClick={() => handleShare(item.id, report)}
-                        />
-                        {/* <button
+            {doctorsNewList.length > 0 && doctorsNewList?.length ? (
+              <>
+                <table className="min-w-full min-h-full divide-y divide-green-3 ">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="py-3 px-4 text-left">S.No.</th>
+                      <th className="py-3 px-4 text-left">Doctor's Name</th>
+                      <th className="py-3 px-4 text-left">Doctor's Email</th>
+                      <th className="py-3 px-4 text-left">Share</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white  ">
+                    {doctorsNewList.length > 0 &&
+                      doctorsNewList.map((item, index) => (
+                        <tr
+                          key={item.id}
+                          className={
+                            index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                          }
+                        >
+                          <td className="py-3 px-4 text-left">{index + 1}</td>
+                          <td className="py-3 px-4 text-left">
+                            {item.first_name} {item.last_name}
+                          </td>
+                          <td className="py-3 px-4 text-left">{item.email}</td>
+                          <td className="py-3 px-4 text-left">
+                            <ButtonPrimary
+                              status={item.buttonColorStatus}
+                              buttonType = {"share-button"}
+                              text={"Share"}
+                              handleClick={() => handleShare(item.id, report)}
+                            />
+                            {/* <button
                         onClick={(e) => handleshare(item.id)}
                         className="text-green-1 hover:underline"
                         >
                         Share
                       </button> */}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+                <button
+                  onClick={handleModalClick}
+                  className="text-gray-500 text-center w-full underline hover:text-green-1"
+                >
+                  Close
+                </button>
+              </>
             ) : (
               <div className="text-xl text-gray-400 text-center">
                 No doctor found
@@ -646,6 +702,7 @@ const Popup = ({
                   onChange={handlePatientChange}
                 /> */}
                   {/* </div> */}
+                  {/* Comments Section */}
                   <div className="w-full mt-6 text-gray-600">
                     <label
                       htmlFor={"Comment"}
@@ -676,6 +733,16 @@ const Popup = ({
         className={`w-full bg-[#D1D1D147] rounded px-4 py-2 mt-1 focus:outline-none focus:bg-white focus:border-[#D1D1D147] border border-transparent}`}
       /> */}
                   </div>
+                  {/* Doctor's Opinion Section */}
+                  {is_admin && doctor_opinion && doctor_opinion.length > 0 ? (
+                    <DoctorOpinion
+                      doctor_opinion={doctor_opinion}
+                      setShowDoctorOpinionTable={setShowDoctorOpinionTable}
+                      showDoctorOpinionTable={showDoctorOpinionTable}
+                    />
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <ButtonPrimary
@@ -692,6 +759,15 @@ const Popup = ({
                 ) : (
                   ""
                 )}
+                {/* {is_admin ? (
+                  <ButtonPrimary
+                    text={"Doctors Opinion"}
+                    onClick={()=> {setShowDoctorOpinionTable(true)}}
+                    width={"full"}
+                  />
+                ) : (
+                  ""
+                )} */}
               </div>
               <button
                 onClick={display}
