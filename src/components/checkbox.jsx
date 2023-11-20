@@ -46,6 +46,14 @@ const allValue = JSON.stringify([
   { id: 2, position: "Fine crackle", isChecked: true },
   { id: 3, position: "Ronchi", isChecked: true },
   { id: 4, position: "Wheeze", isChecked: true },
+  // { id: 5, position: "Normal", isChecked: true },
+  // { id: 6, position: "All", isChecked: true },
+]);
+const normalValue = JSON.stringify([
+  // { id: 1, position: "Coarse crackle", isChecked: true },
+  // { id: 2, position: "Fine crackle", isChecked: true },
+  // { id: 3, position: "Ronchi", isChecked: true },
+  // { id: 4, position: "Wheeze", isChecked: true },
   { id: 5, position: "Normal", isChecked: true },
   // { id: 6, position: "All", isChecked: true },
 ]);
@@ -171,6 +179,20 @@ export default function App({ value, name1, onChange }) {
   const handleSelectOptions = (selectedOptions) => {
     // console.log(selectedOptions, "itse");
     // console.log(selectedOptions)
+    // if(selectedOptions.length>0)
+    // console.log(selectedOptions.length);
+    // if(selectedOptions.length >0){
+    //   console.log(selectedOptions[selectedOption.length-1]);
+    // }
+    // if(selectedOptions[selectedOptions.length-1].value.position === 'Normal'){
+    //   let newSelectedOption = [];
+    //   newSelectedOption = options.filter((item)=> {
+    //     return item.value.position !== 'Normal';
+    //   })
+    //   console.log("new arr" , newSelectedOption);
+
+    // }
+    // console.log("bhavya",selectedOption);
     setSelectedOption(selectedOptions);
     // let newValue = ''
     //   selectedOptions.forEach((element) => {
@@ -184,18 +206,24 @@ export default function App({ value, name1, onChange }) {
 
     let flag = false;
     let posOfIsAllChosen;
+    // let posOfIsNormalChosen;
     const isAllChosen = selectedOptions.map((obj, index) => {
       if (obj.label === "All") {
         posOfIsAllChosen = index;
         flag = true;
         return JSON.parse(allValue);
+      }else if(obj.label === 'Normal'){
+        posOfIsAllChosen = index;
+        flag = true;
+        return JSON.parse(normalValue);
+
       }
     });
 
     // console.log(isAllChosen, "isAllChosen");
     
     let newValue = selectedOptions.map((obj) => {
-       if(obj.label !== "All"){
+       if(obj.label !== "All" && obj.label !== 'Normal'){
 
          return JSON.parse(obj.value)
        }
